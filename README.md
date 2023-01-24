@@ -5,6 +5,7 @@
 This simple bash code lets you rename multiple pdf files to get rid of annoying names.
 
 Usage:
+
     List of parameters:
     
         -h: Show this help panel
