@@ -9,11 +9,11 @@ Usage:
     List of parameters:
     
         -h: Show this help panel
-        -c: Creates the specified number of files in the current directory
-        -a: Delete all the pdf files in the current directory
+        -c: Creates the specified number of pdf files
+        -a: Deletes all the pdf files in the current directory
         -b: Make backup of the files in the folder named PDF-Backup
-        -r: Remove the folder of the previous backup
-        -p: Set the dersired path
+        -r: Removes the previous backup
+        -l: Lists all the pdf files
 
 
 Example: ./pdf-renamer.sh -b -p /Users/YOURUSER/Desktop
