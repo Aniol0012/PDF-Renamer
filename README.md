@@ -13,4 +13,4 @@ Usage:
         -r: Remove the folder of the previous backup
         -p: Set the dersired path
 
-    Example: ./pdf-renamer.sh -b -p /Users/YOURUSER/Desktop
+Example: ./pdf-renamer.sh -b -p /Users/YOURUSER/Desktop
