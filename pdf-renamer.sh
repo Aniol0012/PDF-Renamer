@@ -27,6 +27,7 @@ help_panel() {
     echo -e "\t-b: Make backup of the files in the folder named PDF-Backup"
     echo -e "\t-r: Removes the previous backup"
     echo -e "\t-l: Lists all the pdf files"
+    echo -e "\t-d: Checks if you have all the dependencies you need, if not, it installs it"
     echo -e "\nExample: ./pdf-renamer.sh -b -a"
     print_line
     exit 0
@@ -197,6 +198,8 @@ for argument in $@; do
         list_pdfs
     elif [[ $argument == "-a" ]]; then
         remove_file
+    elif [[ $argument == "-d" ]]; then
+        dependencies
     fi
 done
 rename_file
