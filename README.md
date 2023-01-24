@@ -17,6 +17,7 @@ List of parameters:
         -r: Removes the previous backup
         -l: Lists all the pdf files
 ```
+Example:
 ```
-Example: ./pdf-renamer.sh -b -p /Users/YOURUSER/Desktop
+./pdf-renamer.sh -b -p /Users/YOURUSER/Desktop
 ```
