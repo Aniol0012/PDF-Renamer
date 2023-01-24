@@ -54,6 +54,13 @@ dependencies() {
 	echo ""
 }
 
+get_file_extension() {
+	for file in *; do
+		#echo $(file $file | awk '{print $1}' | awk -F '.' '{print $NF})'
+		echo ""
+	done
+}
+
 delete_backup() {
 	rm -rf $folder_name
 	if [[ $1 == "-f" ]];then
@@ -72,16 +79,10 @@ make_backup() {
 	sleep 1
 }
 
-format_file_file() { # Not working
-	# extract the year and semester from the file name
-	year=${file:0:4};echo "$year"
-	semester=${file:5:1}
-
-	# remove the spaces and special characters from the file name
-	new_file=${file//[ -º]/_}
-
-	# rename the file
-	#mv "$file" "$year-${semester}_$new_file/Solucion"
+rename_file() {
+	let i+=1
+	mv $file ${filename}_$i.pdf
+	echo -e "\t\t- $file has been formated to ${filename}_$i.pdf"
 }
 
 format_file() {
@@ -89,23 +90,36 @@ format_file() {
 	# By now they are not needed
 	#dependencies 
 	print_star
+	let i=0
 	echo -n "Formatting all .pdfs on "
 	if [[ $(echo $given_path) != "" ]]; then
 		echo "path [$(echo $given_path)]"
 		sleep 1
 		for file in $given_path.pdf; do
-			format_file_file $file
-			echo -e "\t- $file has been formated"
+			rename_file $i
 		done
 	else
 		echo "current path [$(pwd)]:"
 		sleep 1
+		echo -e -n "\t"; print_star; read -p "Give a filename: " filename
 		for file in *.pdf; do
-			format_file_file
-			echo -e "\t- $file has been formated"
+			rename_file $i
 		done
 	fi
 	print_star; echo "All files formated"; sleep 1; print_line
+}
+
+create_file() {
+	print_line
+	print_star; read -p "Give the name of the file that you want to create: " filename
+	print_star; read -p "How many files do you want to create: " filenumber
+	for ((i=1;i<$filenumber;i++)); do
+		touch ${filename}_$i.pdf
+		echo -e "\t\t- ${filename}_$i.pdf has been created"
+	done
+	print_star; echo "All files created"; sleep 1; print_line
+	print_line
+	exit 0
 }
 
 # Main function:
@@ -120,14 +134,15 @@ while getopts ":p:b:h:" arg; do
 	esac
 done
 	for argument in $@; do
-
 		if [[ $argument == "-h" ]]; then
 			help_panel
 		elif [[ $argument == "-b" ]]; then
 			make_backup
 		elif [[ $argument == "-r" ]]; then
 			delete_backup -f
-		elif [[ $argument == "-a" ]]; then
+		elif [[ $argument == "-c" ]]; then
+			create_file
+		elif [[ $argument == "-a" ]]; then # fix this and makeit into a function
 			for file in *.pdf; do
 				if [[ $file == "*.pdf" ]]; then # In case there are no pdf files the $file is equal as in the for loop
 					print_line;print_star;echo "There are no pdf files to remove";print_line
@@ -135,7 +150,7 @@ done
 				else
 					rm -rf $file
 					print_line; echo -e "\t- $file has been removed"
-					print_star; echo "All pdf files have been removed"
+					print_star; echo -e "\nAll pdf files have been removed"
 					print_line
 					exit 0
 				fi
